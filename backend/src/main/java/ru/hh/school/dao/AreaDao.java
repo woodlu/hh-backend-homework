@@ -13,10 +13,16 @@ public class AreaDao {
 
     private SessionFactory sessionFactory;
 
-    public void addArea(Area area) {
-        Session session = getSession();
-        System.out.println("add area dao");
-        session.save(area);
+    public void refresh(Area area) {
+        getSession().saveOrUpdate(area);
+    }
+
+    public Area getArea(long areaId) {
+        return getSession().get(Area.class, areaId);
+    }
+
+    public void detach(Area area) {
+        getSession().detach(area);
     }
 
     private Session getSession() {

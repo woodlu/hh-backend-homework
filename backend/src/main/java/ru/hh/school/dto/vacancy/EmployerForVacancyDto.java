@@ -1,4 +1,4 @@
-package ru.hh.school.dto;
+package ru.hh.school.dto.vacancy;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -11,9 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class SalaryDto {
-    private long to;
-    private long from;
-    private String currency;
-    private boolean gross;
+public class EmployerForVacancyDto {
+    private String name;
+    private long id;
 }

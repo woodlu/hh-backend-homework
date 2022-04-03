@@ -1,6 +1,7 @@
 package ru.hh.school.entity;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -12,22 +13,11 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-//@NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
-@Setter
+@Data
 @Builder
-@PropertySource(value = {"classpath:hh.properties"})
 public class Employer {
-    public Employer(long id, String name, LocalDateTime dateCreate, String description, Area area, String comment, long viewCount) {
-        this.id = id;
-        this.name = name;
-        this.dateCreate = dateCreate;
-        this.description = description;
-        this.area = area;
-        this.comment = comment;
-        this.viewCount = viewCount;
-    }
 
     @Id
     private long id;
@@ -35,50 +25,13 @@ public class Employer {
     @Column(name = "date_create")
     @CreationTimestamp
     @Convert(converter = LocalDateTimeConverter.class)
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime dateCreate;
     private String description;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "area_id", nullable = false)
     private Area area;
     private String comment;
     @Column(name = "view_count")
     private long viewCount;
-    @Transient
-    private String popularity;
-
-    @JsonGetter(value = "popularity")
-    private String getThePopularity() {
-        this.popularity = viewCount > 50 ? "POPULAR" : "REGULAR";
-        return popularity;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public LocalDateTime getDateCreate() {
-        return dateCreate;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public Area getArea() {
-        return area;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public long getViewCount() {
-        return viewCount;
-    }
 
 }
