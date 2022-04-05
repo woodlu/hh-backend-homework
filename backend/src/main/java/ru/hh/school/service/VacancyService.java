@@ -53,6 +53,7 @@ public class VacancyService {
 
     public List<FavouriteVacancyDto> getVacanciesFromFavourite(int page, int perPage) {
         List<Vacancy> vacancies = vacancyDao.getVacancies(page, perPage);
+        incrementViewCount(vacancies);
         return vacancies.stream()
                 .map(vacancy -> converters.convertVacancyToFavouriteVacancyDto(vacancy))
                 .collect(Collectors.toList());
@@ -90,18 +91,20 @@ public class VacancyService {
         Vacancy vacancy = vacancyDao.getVacancy(vacancyId);
         if (vacancy == null) return "Vacancy doesn't exist";
         VacancyDto newVacancyDto = client.getVacancy(vacancyId);
-        Area area = vacancy.getArea();
-        Area employerArea = vacancy.getEmployer().getArea();
-        Area newVacancyArea = Area.builder()
+        Area area = vacancy.getArea();  //1
+        Area employerArea = vacancy.getEmployer().getArea(); //1
+        Area newVacancyArea = Area.builder() //1
                 .id(newVacancyDto.getArea().getId())
                 .name(newVacancyDto.getArea().getName())
                 .build();
 
         if (newVacancyArea.getId() != area.getId()) vacancy.setArea(newVacancyArea);
         else vacancy.getArea().setName(newVacancyDto.getArea().getName());
-        if (employerArea.getId() == newVacancyArea.getId()) {
-            vacancy.getEmployer().setArea(newVacancyArea);
-            areaDao.detach(employerArea);
+        if (employerArea.getId() != area.getId()) {
+            if (employerArea.getId() == newVacancyArea.getId()) {
+                vacancy.getEmployer().setArea(newVacancyArea);
+                areaDao.detach(employerArea);
+            }
         }
         vacancy.setName(newVacancyDto.getName());
         vacancy.setSalaryCurrency(newVacancyDto.getSalary().getCurrency());
@@ -109,5 +112,12 @@ public class VacancyService {
         vacancy.setSalaryTo(newVacancyDto.getSalary().getTo());
         vacancy.setSalaryGross(newVacancyDto.getSalary().isGross());
         return "Vacancy " + vacancyId + " refreshed";
+    }
+
+    private void incrementViewCount(List<Vacancy> vacancies) {
+        vacancies.forEach(vacancy -> {
+            vacancy.setViewCount(vacancy.getViewCount() + 1);
+            vacancy.getEmployer().setViewCount(vacancy.getEmployer().getViewCount() + 1);
+        });
     }
 }

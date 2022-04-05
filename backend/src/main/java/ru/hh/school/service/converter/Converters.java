@@ -23,8 +23,6 @@ import java.time.format.DateTimeFormatter;
 @AllArgsConstructor
 public class Converters {
     private FileSettings fileSettings;
-    private HHApiClient client;
-    private AreaDao areaDao;
 
     public Employer convertEmployerDtoToEmployer(EmployerDto employerDto, String comment, Area area) {
         Employer employer = Employer.builder()

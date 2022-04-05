@@ -75,9 +75,6 @@ public class EmployerService {
         else employer.getArea().setName(newEmployerDto.getArea().getName());
         employer.setName(newEmployerDto.getName());
         employer.setDescription(newEmployerDto.getDescription());
-//        areaDao.refresh(area);
-//        Employer newEmployer = converters.convertEmployerDtoToEmployer(newEmployerDto, null, area);
-//        employerDao.refreshEmployer(newEmployer);
         return "Employer " + employerId + " refreshed";
     }
 
@@ -85,7 +82,6 @@ public class EmployerService {
     public void incrementViewCount(List<Employer> employers) {
         employers.forEach(employer -> {
             employer.setViewCount(employer.getViewCount() + 1);
-     //       employerDao.save(employer);
         });
     }
 

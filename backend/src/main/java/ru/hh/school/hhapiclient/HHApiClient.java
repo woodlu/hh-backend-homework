@@ -45,7 +45,7 @@ public class HHApiClient {
         EmployersItemDto employersItemDto = client.target(URL).path(EMPLOYER_LINK)
                 .queryParam("page", page)
                 .queryParam("per_page", perPage)
-                .queryParam("query", query)
+                .queryParam("text", query)
                 .request()
                 .header(USER_AGENT_HEADER, USER_AGENT_HEADER_VALUE)
                 .get(EmployersItemDto.class);
@@ -63,7 +63,7 @@ public class HHApiClient {
         VacanciesItemDto vacanciesItemDto = client.target(URL).path(VACANCY_LINK)
                 .queryParam("page", page)
                 .queryParam("per_page", perPage)
-                .queryParam("query", query)
+                .queryParam("text", query)
                 .request()
                 .header(USER_AGENT_HEADER, USER_AGENT_HEADER_VALUE)
                 .get(VacanciesItemDto.class);
