@@ -133,6 +133,7 @@
                     <mainClass>ru.hh.school.App</mainClass>
                 </configuration>
             </plugin>
+
         </plugins>
     </build>
 </project>
