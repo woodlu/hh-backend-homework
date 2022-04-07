@@ -19,8 +19,8 @@ import ru.hh.school.service.converter.Converters;
 @Configuration
 @Import({
   // import your beans here
-  ExampleResource.class,
   NabCommonConfig.class,
+        ExampleResource.class,
         HHApiClient.class,
         Converters.class,
         EmployerResource.class,
