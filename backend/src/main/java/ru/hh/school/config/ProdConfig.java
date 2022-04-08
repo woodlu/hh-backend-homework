@@ -18,16 +18,6 @@ public class ProdConfig {
 
   @Bean
   public DataSource dataSource(DataSourceFactory dataSourceFactory, FileSettings fileSettings) {
-    FileSettings dataSourceSettings = fileSettings.getSubSettings("master");
-    Properties poolProperties = dataSourceSettings.getSubProperties("pool");
-    HikariConfig config = new HikariConfig(poolProperties);
-    config.setJdbcUrl("jdbc:postgresql://postgres:5432/hh");
-    config.setUsername("hh");
-    config.setPassword("hh");
-    config.setPoolName("master");
-    config.setReadOnly(false);
-    config.setValidationTimeout(config.getConnectionTimeout() + 100L);
-    return dataSourceFactory.create(config, fileSettings, false);
-//    return dataSourceFactory.create("master", false, fileSettings);
+    return dataSourceFactory.create("master", false, fileSettings);
   }
 }

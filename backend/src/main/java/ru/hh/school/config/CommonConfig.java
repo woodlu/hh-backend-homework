@@ -15,6 +15,7 @@ import ru.hh.school.resource.*;
 import ru.hh.school.service.EmployerService;
 import ru.hh.school.service.VacancyService;
 import ru.hh.school.service.converter.Converters;
+import ru.hh.school.validator.Validator;
 
 @Configuration
 @Import({
@@ -31,7 +32,8 @@ import ru.hh.school.service.converter.Converters;
         AreaDao.class,
         VacancyDao.class,
         EmployerService.class,
-        VacancyService.class
+        VacancyService.class,
+        Validator.class
 })
 public class CommonConfig {
 

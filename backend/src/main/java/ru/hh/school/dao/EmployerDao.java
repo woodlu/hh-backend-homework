@@ -28,10 +28,6 @@ public class EmployerDao {
                 .getResultList();
     }
 
-    public void save(Employer employer) {
-        getSession().saveOrUpdate(employer);
-    }
-
     public void editEmployer(long employerId, String comment) {
         getSession()
                 .createQuery("UPDATE Employer SET comment = :comment WHERE id = :employerId")
@@ -44,16 +40,6 @@ public class EmployerDao {
         Employer employer = getSession().load(Employer.class, employerId);
         getSession().delete(employer);
     }
-
-//    public void refreshEmployer(Employer employer) {
-//        getSession()
-//                .createQuery("UPDATE Employer SET name = :name, description = :description, area = :area WHERE id = :employerId")
-//                .setParameter("name", employer.getName())
-//                .setParameter("employerId", employer.getId())
-//                .setParameter("description", employer.getDescription())
-//                .setParameter("area", employer.getArea())
-//                .executeUpdate();
-//    }
 
     private Session getSession() {
         return sessionFactory.getCurrentSession();

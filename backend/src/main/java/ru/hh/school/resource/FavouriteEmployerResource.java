@@ -1,14 +1,15 @@
 package ru.hh.school.resource;
 
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.PathVariable;
 import ru.hh.school.dto.employer.EmployerAddDto;
 import ru.hh.school.dto.employer.EmployerEditDto;
 import ru.hh.school.dto.employer.FavouriteEmployerDto;
-import ru.hh.school.entity.Employer;
 import ru.hh.school.service.EmployerService;
+import ru.hh.school.validator.Validator;
 
 import javax.inject.Singleton;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -20,6 +21,7 @@ import java.util.List;
 public class FavouriteEmployerResource {
 
     private EmployerService employerService;
+    private Validator validator;
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -30,8 +32,9 @@ public class FavouriteEmployerResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<FavouriteEmployerDto> getEmployers(@QueryParam("page") Integer page,
-                                                   @QueryParam("per_page") Integer perPage) {
+    public List<FavouriteEmployerDto> getEmployers(@QueryParam("page") @DefaultValue(value = "0") @Min(value = 0, message = "page should be >= 0")  Integer page,
+                                                   @QueryParam("per_page") @DefaultValue(value = "20") @Max(value = 100, message = "per_page should be <= 100") Integer perPage) {
+        validator.validatePagePerPageEmployers(page, perPage);
         return employerService.getEmployersFromFavourite(page, perPage);
     }
 

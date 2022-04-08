@@ -13,10 +13,6 @@ public class AreaDao {
 
     private SessionFactory sessionFactory;
 
-    public void refresh(Area area) {
-        getSession().saveOrUpdate(area);
-    }
-
     public Area getArea(long areaId) {
         return getSession().get(Area.class, areaId);
     }

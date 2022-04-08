@@ -1,8 +1,5 @@
 package ru.hh.school.hhapiclient;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 import ru.hh.nab.common.properties.FileSettings;
 import ru.hh.school.dto.employer.EmployerDto;
 import ru.hh.school.dto.employer.EmployersItemDto;

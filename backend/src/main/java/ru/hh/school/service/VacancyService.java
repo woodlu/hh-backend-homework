@@ -46,7 +46,6 @@ public class VacancyService {
         Area area = getAreaForVacancy(vacancyDto);
         Employer employer = getEmployerForVacancy(vacancyDto, area);
         vacancy = converters.convertVacancyDtoToVacancy(vacancyDto, vacancyAddDto.getComment(), area, employer);
-//        if (employer.getArea().getId() == vacancy.getArea().getId()) employer.setArea(area);
         vacancyDao.addVacancyToFavourite(vacancy);
         return "Vacancy added";
     }
